@@ -48,7 +48,7 @@ jobs:
       - name: Prepare image name
         shell: bash
         run: |
-          IMAGE_NAME=${{ matrix.base_name }}"
+          IMAGE_NAME="${{ matrix.base_name }}"
           if [[ "${{ matrix.base_name }}" =~ dx ]]; then
             BASE_IMAGE="${BASE_IMAGE}-dx"
           fi
