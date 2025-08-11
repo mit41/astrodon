@@ -32,11 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        base_image_name:
-        [
-          "bluefin",
-          "bluefin-dx",
-        ]
+        base_image_name: ["bluefin", "bluefin-dx"]
 
     permissions:
       contents: read
