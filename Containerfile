@@ -1,11 +1,11 @@
-ARG BASE_IMAGE_NAME="bluefin"
+ARG BASE_IMAGE="bluefin"
 
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /
 
 # Base Image
-FROM ghcr.io/ublue-os/$BASE_IMAGE_NAME:stable
+FROM ghcr.io/ublue-os/$BASE_IMAGE:stable
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
