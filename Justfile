@@ -1,4 +1,4 @@
-export image_name := env("IMAGE_NAME", "astrodon") # output image name, usually same as repo name, change as needed
+export image_name := env("IMAGE_NAME", "astrodon")
 export default_tag := env("DEFAULT_TAG", "stable")
 export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:latest")
 
@@ -92,6 +92,13 @@ build $target_image=image_name $tag=default_tag:
     BUILD_ARGS=()
     if [[ -z "$(git status -s)" ]]; then
         BUILD_ARGS+=("--build-arg" "SHA_HEAD_SHORT=$(git rev-parse --short HEAD)")
+    fi
+
+    # Target
+    if [[ "${target_image}" =~ dx ]]; then
+        BUILD_ARGS+=("--build-arg" "BASE_IMAGE=bluefin-dx")
+    else
+        BUILD_ARGS+=("--build-arg" "BASE_IMAGE=bluefin")
     fi
 
     podman build \
@@ -292,7 +299,6 @@ spawn-vm rebuild="0" type="qcow2" ram="6G":
       --network-user-mode \
       --vsock=false --pass-ssh-key=false \
       -i ./output/**/*.{{ type }}
-
 
 # Runs shell check on all Bash scripts
 lint:
