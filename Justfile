@@ -101,6 +101,8 @@ build $target_image=image_name $tag=default_tag:
         BUILD_ARGS+=("--build-arg" "BASE_IMAGE=bluefin")
     fi
 
+    BUILD_ARGS+=("--build-arg" "IMAGE_NAME=${target_image}")
+
     podman build \
         "${BUILD_ARGS[@]}" \
         --pull=newer \
