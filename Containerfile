@@ -7,6 +7,9 @@ COPY build_files /
 # Base Image
 FROM ghcr.io/ublue-os/$BASE_IMAGE:stable
 
+ARG BASE_IMAGE="bluefin"
+ARG IMAGE_NAME="astrodon"
+
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
