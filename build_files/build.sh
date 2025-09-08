@@ -2,6 +2,25 @@
 
 set -ouex pipefail
 
+## Install tuxedo drivers
+ARCH="$(rpm -E '%_arch')"
+RELEASE="$(rpm -E '%fedora')"
+KERNEL_VERSION="$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
+# TODO: Remove this once https://github.com/ublue-os/akmods/pull/329 is merged
+dnf -y copr enable gladion136/tuxedo-drivers-kmod
+dnf -y install akmods \
+    "akmod-tuxedo-drivers-*.fc${RELEASE}.${ARCH}"
+
+akmods --force --kernels "${KERNEL_VERSION}" --kmod "tuxedo-drivers-kmod"
+
+for file in /usr/lib/modules/${KERNEL_VERSION}/extra/tuxedo-drivers/*.ko.xz; do
+    modinfo "$file" > /dev/null \
+    || (find /var/cache/akmods/tuxedo-drivers/ -name \*.log -print -exec cat {} \; && exit 1)
+done
+
+dnf -y remove akmods
+dnf -y copr disable gladion136/tuxedo-drivers-kmod
+
 ## Install cosmic related stuff
 dnf -y copr enable ryanabx/cosmic-epoch
 
