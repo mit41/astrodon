@@ -2,10 +2,11 @@
 
 set -ouex pipefail
 
-## Install tuxedo drivers
 ARCH="$(rpm -E '%_arch')"
 RELEASE="$(rpm -E '%fedora')"
 KERNEL_VERSION="$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
+
+## Install tuxedo drivers
 # TODO: Remove this once https://github.com/ublue-os/akmods/pull/329 is merged
 dnf -y copr enable gladion136/tuxedo-drivers-kmod
 dnf -y install akmods \
