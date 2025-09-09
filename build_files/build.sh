@@ -2,6 +2,8 @@
 
 set -ouex pipefail
 
+rsync -rvK /ctx/system_files/ /
+
 ARCH="$(rpm -E '%_arch')"
 RELEASE="$(rpm -E '%fedora')"
 KERNEL_VERSION="$(rpm -q kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
@@ -19,6 +21,7 @@ for file in /usr/lib/modules/${KERNEL_VERSION}/extra/tuxedo-drivers/*.ko.xz; do
     || (find /var/cache/akmods/tuxedo-drivers/ -name \*.log -print -exec cat {} \; && exit 1)
 done
 
+userdel akmods
 dnf -y remove akmods
 dnf -y copr disable gladion136/tuxedo-drivers-kmod
 
