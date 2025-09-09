@@ -32,3 +32,7 @@ dnf -y copr enable ryanabx/cosmic-epoch
 dnf -y install cosmic-session
 
 dnf -y copr disable ryanabx/cosmic-epoch
+
+## Enable cosmic-greeter instead of gdm
+systemctl disable display-manager.service
+systemctl enable cosmic-greeter.service
