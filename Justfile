@@ -97,6 +97,8 @@ build $target_image=image_name $tag=default_tag:
     # Target
     if [[ "${target_image}" =~ dx ]]; then
         BUILD_ARGS+=("--build-arg" "BASE_IMAGE=bluefin-dx")
+    elif [[ "${target_image}" =~ bazzite ]]; then
+        BUILD_ARGS+=("--build-arg" "BASE_IMAGE=bazzite-gnome")
     else
         BUILD_ARGS+=("--build-arg" "BASE_IMAGE=bluefin")
     fi

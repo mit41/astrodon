@@ -37,6 +37,7 @@ jobs:
           [
             "${{ github.event.repository.name }}",
             "${{ github.event.repository.name }}-dx",
+            "${{ github.event.repository.name }}-bazzite",
           ]
 
     permissions:
@@ -51,6 +52,8 @@ jobs:
           IMAGE_NAME="${{ matrix.base_name }}"
           if [[ "${{ matrix.base_name }}" =~ dx ]]; then
             BASE_IMAGE="${BASE_IMAGE}-dx"
+          elif [[ "${{ matrix.base_name }}" =~ bazzite ]]; then
+            BASE_IMAGE="bazzite-gnome"
           fi
           echo "BASE_IMAGE=${BASE_IMAGE}" >> $GITHUB_ENV
           echo "IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_ENV
