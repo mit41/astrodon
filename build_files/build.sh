@@ -31,5 +31,8 @@ fi
 ## Install cosmic related stuff
 dnf -y copr enable ryanabx/cosmic-epoch
 
-## We just install cosmic session, because we run it alongside gnome for now
+## Remove gnome session
+dnf -y remove gnome-session
+
+## Install cosmic session instead of gnome
 dnf -y install cosmic-session
